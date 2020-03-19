@@ -1,0 +1,46 @@
+/* react-h5-audio-player override styles */
+
+.rhap_progress-indicator {
+  width: 1rem;
+  height: 1rem;
+  top: -6px;
+}
+
+.rhap_progress-section {
+  align-items: baseline;
+}
+
+.rhap_main-controls {
+  align-items: center;
+}
+
+.rhap_additional-controls {
+  justify-content: flex-end;
+}
+
+.rhap_volume-container {
+  flex: 0 1 12rem;
+  margin-right: 1rem;
+}
+
+.rhap_volume-controls {
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  bottom: 3rem;
+  width: 16rem;
+  border: 1px solid #e3e3e3;
+  background-color: #fff;
+  padding: 0.5rem 0.75rem;
+  z-index: 1;
+}
+
+.toggle-showVolumeControl {
+  flex: 1 0 auto;
+}
+
+.rhap_rewind-button,
+.rhap_forward-button {
+  font-size: 1.5rem;
+  height: 1.5rem;
+}

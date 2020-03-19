@@ -1,0 +1,28 @@
+/* main layout styles for the whole app */
+
+.App {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.App-header,
+.App-content {
+  padding: 0 5%;
+}
+
+.App-header,
+.App-player {
+  flex-shrink: 0;
+}
+
+.App-content {
+  height: 100vh;
+  flex-grow: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
