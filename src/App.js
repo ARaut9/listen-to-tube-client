@@ -4,33 +4,35 @@ import 'react-h5-audio-player/lib/styles.css';
 import './AppPlayer.scss';
 import './App.scss';
 import AppHeader from './components/AppHeader/AppHeader';
-import ToggleVolumeControl from './components/ToggleVolumeControl';
+import ToggleVolumeControl from './components/ToggleVolumeControl/ToggleVolumeControl';
+import AudioMetaData from './components/AudioMetadata/AudioMetadata';
 
 const App = () => {
-  let baseURL;
+  // set baseURL based on environment
+  const baseURL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3001'
+      : 'https://fathomless-temple-89309.herokuapp.com';
+  // media query to render or not render some elements based on screen size
+  const mq = window.matchMedia('(min-width: 640px)');
   const player = createRef();
 
-  if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:3001';
-  }
-
-  if (process.env.NODE_ENV === 'production') {
-    baseURL = 'https://fathomless-temple-89309.herokuapp.com';
-  }
+  const [curVolume, setCurVolume] = useState(10);
+  const [showVolumeControl, setShowVolumeControl] = useState(false);
 
   useEffect(() => {
-    fetch(`${baseURL}/video`)
-      .then(res => res.json())
-      .then(data => setData(data));
+    const audioNode = player.current.audio.current;
 
-    player.current.audio.current.addEventListener('volumechange', e => {
+    audioNode.addEventListener('volumechange', e => {
       setCurVolume((e.target.volume * 10).toFixed(0));
     });
-  }, [baseURL, player]);
 
-  const [data, setData] = useState(null);
-  const [showVolumeControl, setShowVolumeControl] = useState(false);
-  const [curVolume, setCurVolume] = useState(10);
+    return () => {
+      audioNode.removeEventListener('volumechange', e => {
+        setCurVolume((e.target.volume * 10).toFixed(0));
+      });
+    };
+  }, [player]);
 
   return (
     <div className='App'>
@@ -103,7 +105,6 @@ const App = () => {
           Aliquam sit amet risus commodo, tristique velit a, dignissim ante.
           Praesent vel nunc interdum, semper odio vel, pharetra augue.
         </p>
-        {data ? data.name : 'No video found!'}
       </div>
 
       <AppPlayer
@@ -122,8 +123,10 @@ const App = () => {
           showVolumeControl ? RHAP_UI.VOLUME_CONTROLS : null,
           RHAP_UI.MAIN_CONTROLS,
           RHAP_UI.ADDITIONAL_CONTROLS,
+          mq.matches ? <AudioMetaData /> : null,
         ]}
         customVolumeControls={[RHAP_UI.VOLUME, <div>{curVolume}</div>]}
+        header={mq.matches ? null : <AudioMetaData />}
       />
     </div>
   );

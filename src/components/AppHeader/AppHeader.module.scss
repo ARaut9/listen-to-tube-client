@@ -1,5 +1,37 @@
 @import './../../assets/sass/index.scss';
 
 .logo {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+  flex: 1 1 auto;
+
+  a {
+    max-width: 12rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    font-size: 2.5rem;
+    margin-right: 0.25rem;
+  }
+}
+
+.icon {
   font-size: 1.5rem;
+}
+
+@include mq(768px) {
+  .logo {
+    font-size: 1.5rem;
+
+    a {
+      max-width: 14rem;
+    }
+
+    .icon {
+      font-size: 3rem;
+      margin-right: 0.5rem;
+    }
+  }
 }
